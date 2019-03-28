@@ -26,7 +26,7 @@ function insert()
         },  
         error: function(xhr, status, error)  
         {  
-            alert(
+            alert("Failed");
         }  
     });  
 }
