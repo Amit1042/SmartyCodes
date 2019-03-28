@@ -1,0 +1,32 @@
+function insert()
+{
+    $.ajax  
+        ({  
+        url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/GetByTitle('TestAmit')/items",  
+        type: "POST",  
+        data: JSON.stringify  
+        ({  
+            __metadata:  
+            {  
+                type: "SP.Data.TestAmitListItem"  
+            },  
+            Title: "MR.",  
+            FNAme:$("#name").val()
+        }),  
+        headers:  
+        {  
+            "Accept": "application/json;odata=verbose",  
+            "Content-Type": "application/json;odata=verbose",  
+            "X-RequestDigest": $("#__REQUESTDIGEST").val(),  
+            "X-HTTP-Method": "POST"  
+        },  
+        success: function(data, status, xhr)  
+        {  
+            alert("Save");
+        },  
+        error: function(xhr, status, error)  
+        {  
+            alert(
+        }  
+    });  
+}
