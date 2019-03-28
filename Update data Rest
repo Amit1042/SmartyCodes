@@ -1,0 +1,33 @@
+function update()  
+{  
+    $.ajax  
+    ({  
+        url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/GetByTitle('TestAmit')/items(2)",
+        type: "POST",  
+        data: JSON.stringify  
+        ({  
+            __metadata:  
+            {  
+                type: "SP.Data.TestAmitListItem"  
+            },  
+            Title: "Mr.",
+            FNAme: "Amit kumar"
+        }),  
+        headers:  
+        {  
+            "Accept": "application/json;odata=verbose",  
+            "Content-Type": "application/json;odata=verbose",  
+            "X-RequestDigest": $("#__REQUESTDIGEST").val(),  
+            "IF-MATCH": "*",  
+            "X-HTTP-Method": "MERGE"  
+        },  
+        success: function(data, status, xhr)  
+        {  
+            alert("Data Updated");
+        },  
+        error: function(xhr, status, error)  
+        {  
+            $("#ResultDiv").empty().text(data.responseJSON.error);  
+        }  
+    });
+ }
