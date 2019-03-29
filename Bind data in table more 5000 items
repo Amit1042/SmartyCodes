@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<title></title>
+	<script type="text/javascript"> 
+    
+    var url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('VenderList')/items?$top=20&$$select=Title,VENDER_NAME,GSTN_NO,CONTACT_NO,VENDER_TYPE,CITY,POSTAL_CODE,STATE,EMAIL_ID,ID&$filter=GSTN_NO eq '09DEOPK0061'";
+    var response = response || [];  // this variable is used for storing list items
+    function GetListItems(){
+           $.ajax({
+            url: url,  
+            method: "GET",  
+            headers: {  
+                "Accept": "application/json; odata=verbose"  
+            },
+            success: function(data){
+                response = response.concat(data.d.results);
+                 var tr = "";
+                if (data.d.__next) {
+                    url = data.d.__next;
+                    GetListItems();
+                }                
+                for (var i = 0; i < data.d.results.length; i++)   
+           {                      
+               var value = data.d.results[i]; 
+                 tr += '<tr><td>' +i + '</td><td>' + value.GSTN_NO + '</td><td>' + value.VENDER_NAME + '</td><td>' +value.VENDER_TYPE + '</td><td>'+value.CONTACT_NO+ '</td><td>' + value.CITY+ '</td><td>' + value.EMAIL_ID + '</td></tr>';               
+                 
+            }              
+        $("#example tbody").append(tr); 
+            },
+            error: function(error){
+                   alert("Failed")
+            }
+        });
+    }
+
+</script>
+</head>
+<body>
+	<div class="container">
+	<input type="button" value="Load!" onclick="GetListItems()" >
+	<input type="button" value="Count TR!" onclick="count()">
+	<table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>SR NO</th>
+                <th>GSTN NO</th>
+                <th>VENDER NAME</th>
+                <th>VENDER TYPE</th>
+                <th>CONTACT NO</th>
+                <th>CITY</th>
+                <th>EMAIL ID</th>
+            </tr>
+        </thead>
+        <tbody>          
+            
+        </tbod>
+    </table>
+</div>
+</body>
+</html>
