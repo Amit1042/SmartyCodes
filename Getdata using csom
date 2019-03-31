@@ -1,0 +1,46 @@
+protected void Getdata_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ClientContext cc = new ClientContext("");
+                cc.AuthenticationMode = ClientAuthenticationMode.Default;
+                cc.Credentials = new System.Net.NetworkCredential("usrname", "pswd");             
+                List oList = cc.Web.Lists.GetByTitle("listnme");
+                CamlQuery camlQuery = new CamlQuery();
+               camlQuery.ViewXml = "<View><Query><Where><And><Eq><FieldRef Name='Title' /><Value Type='Text'>"+txtname.Text+"</Value></Eq><And><Eq><FieldRef Name='Subsidiary' /><Value Type='Text'>"+txtSubsidiary.SelectedItem.Text+"</Value></Eq><And><Eq><FieldRef Name='JobGrade' /><Value Type='Text'>"+txtGrade.SelectedItem.Text+"</Value></Eq><Eq><FieldRef Name='TypeT' /><Value Type='Text'>"+TxtType.SelectedItem.Text+"</Value></Eq></And></And></And></Where></Query></View>";
+                ListItemCollection collListItem = oList.GetItems(camlQuery);
+                cc.Load(collListItem);
+                cc.ExecuteQuery();
+                if (collListItem.Count > 0)
+                {
+                    foreach (ListItem oListItem in collListItem)
+                    {
+                        TextName1.Text = oListItem["Title"].ToString();
+                        TextGen.Text = oListItem["GEN"].ToString();
+                        TextCltb.Text = oListItem["CLTB"].ToString();
+                        TextCost.Text = oListItem["Cost_x0020_Center"].ToString();
+                        TextCompany.Text = oListItem["Company"].ToString();
+                        TextDepartment.Text = oListItem["Department"].ToString();
+                        TextJobprofile.Text = oListItem["JobProfile"].ToString();
+                        TextProduct.Text = oListItem["Product"].ToString();
+                        TexthireDate.Text = oListItem["HireDate"].ToString();
+                        TextService.Text = oListItem["Service"].ToString();
+                        Textdob.Text = oListItem["DoB"].ToString();
+                        TextAge.Text = oListItem["Age"].ToString();
+                        TextGender.Text = oListItem["Gender"].ToString();
+                    }
+                }
+                
+                    else 
+                    {
+                        msg
+                    }
+                }
+               
+            
+            catch (Exception ex)
+            {
+            }
+           
+
+        }
