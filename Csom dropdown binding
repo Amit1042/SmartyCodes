@@ -1,0 +1,40 @@
+protected void txtname_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ClientContext cc = new ClientContext("url");
+                cc.AuthenticationMode = ClientAuthenticationMode.Default;
+                cc.Credentials = new System.Net.NetworkCredential("username", "pswrd");
+                // Load reference to content type collection
+                //Web web = cc.Web;
+                List oList = cc.Web.Lists.GetByTitle("listname");
+
+                CamlQuery camlQuery = new CamlQuery();
+                camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" + txtname.Text + "</Value></Eq></Where></Query></View>";
+                ListItemCollection collListItem = oList.GetItems(camlQuery);
+
+                cc.Load(collListItem);
+
+                cc.ExecuteQuery();
+                string name = string.Empty;
+                txtSubsidiary.Items.Clear();
+                txtGrade.Items.Clear();
+                TxtType.Items.Clear();
+
+                foreach (ListItem oListItem in collListItem)
+                {
+
+                    txtSubsidiary.Items.Add(new System.Web.UI.WebControls.ListItem(oListItem["Subsidiary"].ToString()));
+                    txtGrade.Items.Add(new System.Web.UI.WebControls.ListItem(oListItem["JobGrade"].ToString()));
+                    TxtType.Items.Add(new System.Web.UI.WebControls.ListItem(oListItem["TypeT"].ToString()));
+
+
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+            }
+           
+        }
