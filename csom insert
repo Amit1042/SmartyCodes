@@ -1,0 +1,24 @@
+ public void Update_Click()
+        {
+                ClientContext cc = new ClientContext("url/");
+                cc.AuthenticationMode = ClientAuthenticationMode.Default;
+                cc.Credentials = new System.Net.NetworkCredential("username", "Password");
+                List oList = cc.Web.Lists.GetByTitle("listname");
+                ListItemCreationInformation listCreationInformation = new ListItemCreationInformation();
+                ListItem oListItem = oList.AddItem(listCreationInformation);
+                oListItem["Title"] = Convert.ToString(TextName1.Text);
+                oListItem["GEN"] = Convert.ToString(TextGen.Text);
+                oListItem["CLTB"] = Convert.ToString(TextCltb.Text);
+                oListItem["CostCenter"] = Convert.ToString(TextCost.Text);
+                oListItem["Company"] = Convert.ToString(TextCompany.Text);
+                oListItem["Department"] = Convert.ToString(TextDepartment.Text);
+                oListItem["JobProfile"] = Convert.ToString(TextJobprofile.Text);
+                oListItem["Product"] = Convert.ToString(TextProduct.Text);
+                oListItem["HireDate"] = Convert.ToString(TexthireDate.Text);
+                oListItem["Age"] = Convert.ToString(TextAge.Text);
+                oListItem["Gender"] = Convert.ToString(TextGender.Text);
+                oListItem.Update();
+                cc.ExecuteQuery();
+                EmptyTextField();
+
+        }
