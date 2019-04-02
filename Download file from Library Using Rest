@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+            $(document).ready(function(){
+                $('#buttonClick').click(function(){
+                    GETURL('Libtest1','back');
+                    GETURL('Libtest2','file');
+                    GETURL('Libtest3','FTR');
+                })
+            })
+function GETURL(listname, filename)
+{
+var requestUri = _spPageContextInfo.webAbsoluteUrl +
+"/_api/web/GetFolderByServerRelativeUrl('"+listname+"')/files?Select=Name,ServerRelativeUrl&$filter=startswith(Name,'"+filename+"')";
+
+var requestHeaders = {
+    "accept": "application/json;odata=verbose"
+}
+
+$.ajax({
+    url: requestUri,
+    type: 'GET',
+    dataType: 'json',
+    headers: requestHeaders,
+    
+    success: function (data) 
+    {
+        console.log(data);        
+       $.each(data.d.results, function(i,result) {
+            var path =document.location.origin+result.ServerRelativeUrl;
+            let a = document.createElement('a')
+            a.href = path;
+            a.download = path.split('/').pop();
+            a.click();
+            
+         });
+
+    },
+    error: function ajaxError(response) {
+        alert(response.status + ' ' + response.statusText);
+    }
+});	
+			
+}		</script>
+	</head>
+	<body>
+<input type="button" id="buttonClick" value="--GetUrl--">		
+		
+		
+		
+	</body>
+</html>
