@@ -1,0 +1,31 @@
+function getdata()
+{
+var	Emp_code = $("#Empid").val();
+    var itemId="";  
+  
+    var Ownurl = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('PersonalDtl')/items?$filter=Title eq ('"+ Emp_code +"')";  
+    $.ajax({  
+  
+        url: Ownurl,  
+        headers: { Accept: "application/json;odata=verbose" },  
+        async:false,  
+        success: function (data) { 
+			debugger; 
+            var items = data.d.results;  
+            if (items.length > 0) 
+			{  
+                ID1=items[0].ID;
+				$('#Empid').val(items[0].Title);
+   			$('#designation').val(items[0].Designation);
+				$('#pre_add').val(items[0].Present_Address);
+				$('#parma_add').val(items[0].Parmanent_Address);				
+            }  
+  
+        },
+			eror: function (data) 
+			{  
+        		alert("An error occurred. Please try again.");  
+			}  
+    });  
+	
+}
